@@ -1,0 +1,26 @@
+[project]
+name = "sample-app"
+version = "0.1.0"
+description = "A sample Python app for Luban CI. Replace this with your own description."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi",
+    "uvicorn",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+# [project.scripts] is CRITICAL for Kubernetes deployment.
+# It defines the entrypoint command that the Docker container will run.
+# The format is `command_name = "package.module:function"`.
+# In this template:
+# - "app" is the command name (executable) created in the container environment.
+# - "sample_app.main:start" tells it to run the `start()` function in `src/sample_app/main.py`.
+#
+# If you change the entrypoint function or module, you MUST update this section.
+# Failure to do so will cause the container to fail to start in the cluster.
+[project.scripts]
+app = "sample_app.main:start"
